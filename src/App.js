@@ -1,25 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import "./index.css";
+import { useState, useEffect } from "react";
+import Header from 
+import SearchBar from 
+import MovieList from 
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [searchValue, setSearchValue] = useState("")
+  const [movies, setMovies] = useState([])
+
+
+
+  return <div className='App'>
+    <Header title="Ste's Movies"></Header>
+    <SearchBar setSearchValue={setSearchValue}></SearchBar>
+    <MovieList movies={movies}></MovieList>
+  </div>;
 }
 
 export default App;
