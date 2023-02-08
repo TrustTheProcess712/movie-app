@@ -24,8 +24,11 @@ body {
   color: #fff;
 }
 
-h3 {
-  color: #885cf6;
+h3,
+h1 {
+  background-image: linear-gradient(to right, var(--pink), var(--purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 /* header */
 
@@ -39,9 +42,13 @@ h3 {
 
 .header h1 {
   font-size: 50px;
-  border-bottom: 3px solid #ec4899;
-  border-radius: 2px;
+  /* border-bottom: 3px solid var(--darkest);
+  border-right: 2px solid var(--darkest); */
+  /* border-radius: 0.5rem; */
   color: #885cf6;
+  background-image: linear-gradient(to right, var(--pink), var(--purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* search bar */
@@ -58,4 +65,32 @@ button {
   outline: none;
   background: none;
   text-align: center;
+}
+
+input {
+  max-width: 400px;
+  flex: 1 1 0%;
+  background-color: var(--darker);
+  padding: 0.5rem;
+  border-radius: 1rem;
+  margin-right: 1rem;
+  font-size: 1.25rem;
+  color: var(--gray);
+}
+
+input::placeholder {
+  color: var(--gray);
+}
+
+button {
+  color: var(--pink);
+  font-size: 1.25rem;
+  font-weight: 700;
+  background-image: linear-gradient(to right, var(--pink), var(--purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+button:hover {
+  cursor: pointer;
 }
