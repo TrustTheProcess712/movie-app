@@ -1,6 +1,6 @@
 import "./index.css";
 import { useState, useEffect } from "react";
-import { getAllMovies, getSearchedMovies } from "./api.js";
+import { getAllMovies, getSearchedMovies } from "./utils/api.js";
 import Header from "./components/Header.jsx";
 import SearchBar from "./components/SearchBar.jsx";
 import MovieList from "./components/MovieList.jsx";
