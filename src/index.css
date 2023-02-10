@@ -30,13 +30,9 @@ h1 {
   background-image: linear-gradient(to right, var(--pink), var(--purple));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  padding-bottom: 0.5rem;
-}
-
-h3 {
-  display: grid;
-  justify-items: center;
-  align-items: center;
+  padding-top: 1rem;
+  display: flex;
+  justify-content: center;
 }
 
 /* header */
@@ -103,6 +99,28 @@ button {
 
 button:hover {
   cursor: pointer;
+}
+
+/* movie details */
+
+.movie-details h1,
+h3,
+p {
+  margin-left: 64px;
+  margin-right: 64px;
+  display: grid;
+  justify-content: center;
+}
+
+.movie-img {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+img {
+  box-shadow: 10px 10px 20px #111827;
 }
 
 /* @media only screen and (max-width: 599px) {

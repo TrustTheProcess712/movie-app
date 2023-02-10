@@ -6,28 +6,29 @@ const myAPI = axios.create({
   baseURL: `https://api.themoviedb.org/3`,
 });
 
-export function getAllMovies() {
-  return myAPI
+export const getAllMovies = async () => {
+  const movieData = await myAPI
     .get(`/discover/movie?sort_by=popularity.desc&api_key=${API}&page=1`)
     .then(({ data }) => {
       return data.results;
     });
-}
+  return movieData;
+};
 
-export function getSearchedMovies(searchValue) {
-  return myAPI
+export const getSearchedMovies = async (searchValue) => {
+  const movieData = await myAPI
     .get(`/search/movie?&api_key=${API}&query=${searchValue}`)
     .then(({ data }) => {
       return data.results;
     });
-}
+  return movieData;
+};
 
-export function getMovieByID(id) {
-  return myAPI
-
+export const getMovieByID = async (id) => {
+  const movieData = await myAPI
     .get(`/movie/${id}?api_key=${API}&language=en-US`)
     .then(({ data }) => {
-      console.log(data, "data");
-      return data.results;
+      return data;
     });
-}
+  return movieData;
+};
