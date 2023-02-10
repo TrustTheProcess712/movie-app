@@ -13,6 +13,7 @@
 * {
   box-sizing: border-box;
   margin: 0;
+  padding: 0;
   font-family: "Quicksand";
 }
 
@@ -29,7 +30,15 @@ h1 {
   background-image: linear-gradient(to right, var(--pink), var(--purple));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  padding-bottom: 0.5rem;
 }
+
+h3 {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+}
+
 /* header */
 
 .header {
@@ -42,13 +51,14 @@ h1 {
 
 .header h1 {
   font-size: 50px;
-  /* border-bottom: 3px solid var(--darkest);
-  border-right: 2px solid var(--darkest); */
-  /* border-radius: 0.5rem; */
   color: #885cf6;
   background-image: linear-gradient(to right, var(--pink), var(--purple));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+a {
+  text-decoration: none;
 }
 
 /* search bar */
@@ -56,6 +66,7 @@ h1 {
 form {
   display: flex;
   justify-content: center;
+  margin-bottom: 1.5rem;
 }
 
 input,
@@ -64,13 +75,12 @@ button {
   border: none;
   outline: none;
   background: none;
-  text-align: center;
+  text-align: left;
 }
 
 input {
-  max-width: 400px;
+  max-width: 200px;
   flex: 1 1 0%;
-  background-color: var(--darker);
   padding: 0.5rem;
   border-radius: 1rem;
   margin-right: 1rem;
@@ -94,3 +104,13 @@ button {
 button:hover {
   cursor: pointer;
 }
+
+/* @media only screen and (max-width: 599px) {
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: var(--light);
+    color: #fff;
+  }
+} */
