@@ -7,7 +7,6 @@ const SearchBar = ({ setSearchValue }) => {
     e.preventDefault();
     setSearchValue(newInput);
   };
-
   return (
     <form onSubmit={handleSubmit}>
       <input

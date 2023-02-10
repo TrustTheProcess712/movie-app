@@ -1,20 +1,12 @@
-const MovieList = ({ movies }) => {
-  const imgsrc = "https://image.tmdb.org/t/p/w1280";
+import Grid from "@mui/material/Grid";
 
+const MovieList = ({ children }) => {
   return (
-    <div className='movie-list'>
-      {movies.map((movie) => (
-        <div className='moviecard' key={movie.id}>
-          <h3>{movie.title}</h3>
-          <img
-            src={imgsrc + movie.poster_path}
-            alt='movie-poster'
-            width={200}
-            height={300}
-          />
-        </div>
-      ))}
-    </div>
+    <>
+      <Grid container spacing={2}>
+        {children}
+      </Grid>
+    </>
   );
 };
 

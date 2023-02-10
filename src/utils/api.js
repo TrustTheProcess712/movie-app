@@ -21,3 +21,13 @@ export function getSearchedMovies(searchValue) {
       return data.results;
     });
 }
+
+export function getMovieByID(id) {
+  return myAPI
+
+    .get(`/movie/${id}?api_key=${API}&language=en-US`)
+    .then(({ data }) => {
+      console.log(data, "data");
+      return data.results;
+    });
+}
