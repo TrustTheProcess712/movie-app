@@ -15,22 +15,37 @@ import MovieDetails from "./components/MovieDetails.jsx";
 function App() {
   const [searchValue, setSearchValue] = useState("");
   const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    getAllMovies().then((moviesFromAPI) => {
-      if (searchValue === "") {
-        setMovies(moviesFromAPI);
-      } else if (searchValue.length > 1) {
-        getSearchedMovies(searchValue).then((searchResults) => {
-          setMovies(searchResults);
-        });
-      }
-    });
+    setTimeout(() => {
+      getAllMovies().then((moviesFromAPI) => {
+        if (searchValue === "") {
+          setMovies(moviesFromAPI);
+          setLoading(false);
+        } else if (searchValue.length > 1) {
+          getSearchedMovies(searchValue)
+            .then((searchResults) => {
+              console.log(searchResults);
+              if (searchResults.length < 1) {
+                setError(true);
+                throw Error(
+                  "sorry, could not fetch data for that movie title..."
+                );
+              } else {
+                setMovies(searchResults);
+                setLoading(false);
+              }
+            })
+            .catch((err) => {
+              setLoading(false);
+              setError(err.message);
+            });
+        }
+      });
+    }, 500);
   }, [searchValue]);
-
-  // if (!movies) {
-  //   <h1>Loading...</h1>;
-  // }
 
   return (
     <BrowserRouter>
@@ -40,10 +55,10 @@ function App() {
           <SearchBar setSearchValue={setSearchValue} />
           <Routes>
             <Route
-              path='/'
+              path='/movie'
               element={
                 <MovieList>
-                  <MovieCard movies={movies} />
+                  <MovieCard movies={movies} error={error} loading={loading} />
                 </MovieList>
               }></Route>
             <Route path='/movie/:id' element={<MovieDetails />}></Route>
