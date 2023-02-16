@@ -4,42 +4,37 @@ import { getMovieByID } from "../utils/api.js";
 
 const MovieDetails = () => {
   const [selectedMovie, setSelectedMovie] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { id } = useParams();
 
-  const imgsrc = "https://image.tmdb.org/t/p/w1280";
+  const imgsrc = "https://image.tmdb.org/t/p/w1280" + selectedMovie.poster_path;
 
   useEffect(() => {
     setTimeout(() => {
       getMovieByID(id).then((movie) => {
         setSelectedMovie(movie);
+        setLoading(false);
       });
-    });
+    }, 1000);
   }, [id]);
-
-  if (!selectedMovie) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className='movie-details'>
-      <h1>{selectedMovie.title}</h1>
-      <section>
-        <h3>Release Date:</h3>
-        <p>{selectedMovie.release_date}</p>
-      </section>
-      <section>
-        <h3>Runtime:</h3>
-        <p>{selectedMovie.runtime} minutes</p>
-      </section>
-      <div className='movie-img'>
-        <img
-          src={imgsrc + selectedMovie.poster_path}
-          alt='movie poster'
-          width='35%'
-        />
-      </div>
-      <h3>Movie Overview:</h3>
-      <p>{selectedMovie.overview}</p>
+      {loading && <h1>Loading...</h1>}
+      {!loading && (
+        <>
+          <h1>{selectedMovie.title}</h1>
+          <h3>Release Date:</h3>
+          <p>{selectedMovie.release_date}</p>
+          <h3>Runtime:</h3>
+          <p>{selectedMovie.runtime} minutes</p>
+          <div className='movie-img'>
+            <img src={imgsrc} alt='movie poster' width='35%' />
+          </div>
+          <h3>Movie Overview:</h3>
+          <p>{selectedMovie.overview}</p>
+        </>
+      )}
     </div>
   );
 };
