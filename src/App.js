@@ -4,9 +4,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Container from "@mui/material/Container";
 
 import { useState, useEffect } from "react";
-import { getAllMovies, getSearchedMovies } from "./utils/api.js";
+import { getRecentMovies, getSearchedMovies } from "./utils/api.js";
 import Header from "./components/Header.jsx";
-// import Home from "./components/Home.jsx";
+import Home from "./components/Home.jsx";
 import SearchBar from "./components/SearchBar.jsx";
 import MovieList from "./components/MovieList.jsx";
 import MovieCard from "./components/MovieCard.jsx";
@@ -20,14 +20,13 @@ function App() {
 
   useEffect(() => {
     setTimeout(() => {
-      getAllMovies().then((moviesFromAPI) => {
-        if (searchValue === "") {
+      getRecentMovies().then((moviesFromAPI) => {
+        if (!searchValue) {
           setMovies(moviesFromAPI);
           setLoading(false);
-        } else if (searchValue.length > 1) {
+        } else if (searchValue) {
           getSearchedMovies(searchValue)
             .then((searchResults) => {
-              console.log(searchResults);
               if (searchResults.length < 1) {
                 setError(true);
                 throw Error(
@@ -45,27 +44,47 @@ function App() {
         }
       });
     }, 500);
-  }, [searchValue]);
+  }, [movies]);
 
   return (
-    <BrowserRouter>
-      <div className='App'>
-        <Container>
-          <Header title='SM Movies DB' />
-          <SearchBar setSearchValue={setSearchValue} />
-          <Routes>
-            <Route
-              path='/movie'
-              element={
-                <MovieList>
-                  <MovieCard movies={movies} error={error} loading={loading} />
-                </MovieList>
-              }></Route>
-            <Route path='/movie/:id' element={<MovieDetails />}></Route>
-          </Routes>
-        </Container>
-      </div>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <div className='App'>
+          <Container>
+            <Header title='SM Movies DB' />
+            <SearchBar setSearchValue={setSearchValue} />
+            <Routes>
+              <Route
+                path='/'
+                element={<Home setSearchVaue={setSearchValue} />}></Route>
+              <Route
+                path='/movies'
+                element={
+                  <MovieList>
+                    <MovieCard
+                      movies={movies}
+                      error={error}
+                      loading={loading}
+                    />
+                  </MovieList>
+                }></Route>
+              <Route
+                path='/movies/search'
+                element={
+                  <MovieList>
+                    <MovieCard
+                      movies={movies}
+                      error={error}
+                      loading={loading}
+                    />
+                  </MovieList>
+                }></Route>
+              <Route path='/movies/:id' element={<MovieDetails />}></Route>
+            </Routes>
+          </Container>
+        </div>
+      </BrowserRouter>
+    </>
   );
 }
 
