@@ -6,7 +6,7 @@ const myAPI = axios.create({
   baseURL: `https://api.themoviedb.org/3`,
 });
 
-export const getAllMovies = async () => {
+export const getRecentMovies = async () => {
   const movieData = await myAPI
     .get(`/discover/movie?sort_by=popularity.desc&api_key=${API}&page=1`)
     .then(({ data }) => {
