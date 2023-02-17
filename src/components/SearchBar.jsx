@@ -1,21 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SearchBar = ({ setSearchValue }) => {
-  const [newInput, setNewInput] = useState("");
+  const [input, setInput] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e, newInput) => {
     e.preventDefault();
-    setSearchValue(newInput);
+    navigate("/movies/search");
+    setSearchValue((currValue) => {
+      const newValue = newInput;
+      // console.log(newValue);
+      return newValue;
+    });
+    setInput("");
   };
+
+  const isInputEmpty = input.trim() === "";
+
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={(e) => handleSubmit(e, input)}>
       <input
         type='text'
-        value={newInput}
+        value={input}
         placeholder='Type to search... '
-        onChange={(e) => setNewInput(e.target.value)}
+        onChange={(e) => setInput(e.target.value)}
       />
-      <button type='submit'>Search</button>
+      <button type='submit' disabled={isInputEmpty}>
+        Search
+      </button>
     </form>
   );
 };
