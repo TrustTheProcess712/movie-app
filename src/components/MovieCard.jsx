@@ -8,7 +8,6 @@ import Grid from "@mui/material/Grid";
 const MovieCard = ({ movies, loading, error }) => {
   const imgsrc = "https://image.tmdb.org/t/p/w1280";
 
-  console.log(error);
   return (
     <>
       {error && <p>{error}</p>}
@@ -18,11 +17,9 @@ const MovieCard = ({ movies, loading, error }) => {
         movies.map((movie) => {
           return (
             <Grid key={movie.id} item xs={3}>
-              {/* <h3>{movie.title}</h3> */}
               <Card
                 square
                 elevation={10}
-                // variant='outlined'
                 sx={{
                   maxWidth: 200,
                   minWidth: 200,
@@ -31,7 +28,7 @@ const MovieCard = ({ movies, loading, error }) => {
                   marginLeft: "2.25rem",
                 }}>
                 <CardActionArea>
-                  <Link to={`/movie/${movie.id}`}>
+                  <Link to={`/movies/${movie.id}`}>
                     <CardMedia
                       component='img'
                       image={imgsrc + movie.poster_path}
