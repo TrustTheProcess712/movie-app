@@ -15,52 +15,47 @@ import MovieDetails from "./components/MovieDetails.jsx";
 function App() {
   const [searchValue, setSearchValue] = useState("");
   const [movies, setMovies] = useState([]);
+  const [defaultList, setDefaultList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  console.log(movies);
+
   useEffect(() => {
-    setTimeout(() => {
-      getRecentMovies().then((moviesFromAPI) => {
-        if (!searchValue) {
-          setMovies(moviesFromAPI);
-          setLoading(false);
-        } else if (searchValue) {
-          getSearchedMovies(searchValue)
-            .then((searchResults) => {
-              if (searchResults.length < 1) {
-                setError(true);
-                throw Error(
-                  "sorry, could not fetch data for that movie title..."
-                );
-              } else {
-                setMovies(searchResults);
-                setLoading(false);
-              }
-            })
-            .catch((err) => {
-              setLoading(false);
-              setError(err.message);
-            });
-        }
-      });
-    }, 500);
-  }, [movies]);
+    getRecentMovies().then((moviesFromAPI) => {
+      if (searchValue.length < 1) {
+        setMovies(moviesFromAPI);
+        setLoading(false);
+      } else if (searchValue) {
+        getSearchedMovies(searchValue)
+          .then((results) => {
+            setMovies(results);
+          })
+          .catch((err) => {
+            console.log(err);
+            setLoading(false);
+            setError(err.message);
+          });
+      }
+    });
+  }, [searchValue]);
 
   return (
     <>
       <BrowserRouter>
         <div className='App'>
           <Container>
-            <Header title='SM Movies DB' />
-            <SearchBar setSearchValue={setSearchValue} />
+            <Header title='Movies DB' />
+            <SearchBar
+              setSearchValue={setSearchValue}
+              defaultList={defaultList}
+            />
             <Routes>
-              <Route
-                path='/'
-                element={<Home setSearchVaue={setSearchValue} />}></Route>
+              <Route path='/' element={<Home />}></Route>
               <Route
                 path='/movies'
                 element={
-                  <MovieList>
+                  <MovieList setMovies={setMovies}>
                     <MovieCard
                       movies={movies}
                       error={error}
@@ -68,17 +63,7 @@ function App() {
                     />
                   </MovieList>
                 }></Route>
-              <Route
-                path='/movies/search'
-                element={
-                  <MovieList>
-                    <MovieCard
-                      movies={movies}
-                      error={error}
-                      loading={loading}
-                    />
-                  </MovieList>
-                }></Route>
+
               <Route path='/movies/:id' element={<MovieDetails />}></Route>
             </Routes>
           </Container>
