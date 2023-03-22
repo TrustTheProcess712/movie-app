@@ -13,17 +13,14 @@ import MovieCard from "./components/MovieCard.jsx";
 import MovieDetails from "./components/MovieDetails.jsx";
 
 function App() {
-  const [searchValue, setSearchValue] = useState("");
   const [movies, setMovies] = useState([]);
-  const [defaultList, setDefaultList] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   console.log(movies);
-
   useEffect(() => {
     getRecentMovies().then((moviesFromAPI) => {
-      if (searchValue.length < 1) {
+      if (searchValue === "") {
         setMovies(moviesFromAPI);
         setLoading(false);
       } else if (searchValue) {
@@ -46,10 +43,7 @@ function App() {
         <div className='App'>
           <Container>
             <Header title='Movies DB' />
-            <SearchBar
-              setSearchValue={setSearchValue}
-              defaultList={defaultList}
-            />
+            <SearchBar setSearchValue={setSearchValue} />
             <Routes>
               <Route path='/' element={<Home />}></Route>
               <Route
