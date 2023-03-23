@@ -14,36 +14,48 @@ import MovieDetails from "./components/MovieDetails.jsx";
 
 function App() {
   const [movies, setMovies] = useState([]);
+  const [latestMovies, setLatestMovies] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  console.log(movies);
+
   useEffect(() => {
-    getRecentMovies().then((moviesFromAPI) => {
-      if (searchValue === "") {
+    if (searchValue === "") {
+      getRecentMovies().then((moviesFromAPI) => {
+        setLatestMovies(moviesFromAPI);
         setMovies(moviesFromAPI);
         setLoading(false);
-      } else if (searchValue) {
-        getSearchedMovies(searchValue)
-          .then((results) => {
-            setMovies(results);
-          })
-          .catch((err) => {
-            console.log(err);
-            setLoading(false);
-            setError(err.message);
-          });
-      }
-    });
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (searchValue) {
+      getSearchedMovies(searchValue)
+        .then((results) => {
+          setMovies(results);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoading(false);
+          setError(err.message);
+        });
+    }
   }, [searchValue]);
+
+  const handleHeaderClick = () => {
+    setMovies(latestMovies);
+  };
+  console.log(movies);
 
   return (
     <>
       <BrowserRouter>
         <div className='App'>
           <Container>
-            <Header title='Movies DB' />
-            <SearchBar setSearchValue={setSearchValue} />
+            <Header title='Movies DB' handleHeaderClick={handleHeaderClick} />
+            <SearchBar setSearchValue={setSearchValue} setError={setError} />
             <Routes>
               <Route path='/' element={<Home />}></Route>
               <Route

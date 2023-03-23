@@ -1,54 +1,37 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-// import { useNavigate } from "react-router-dom";
-
-const SearchBar = ({ searchValue, setSearchValue }) => {
+const SearchBar = ({ setError, setSearchValue }) => {
   const [input, setInput] = useState("");
-  const [timeoutId, setTimeoutId] = useState(null);
-  // const navigate = useNavigate();
+  const [timeoutId, setTimeoutId] = useState(undefined);
 
-  // const handleSubmit = (e, newInput) => {
-  //   e.preventDefault();
-  //   if (newInput)
-  //     setSearchValue((currValue) => {
-  //       const newValue = newInput;
-  //       return newValue;
-  //     });
-  //   navigate("/movies");
-  //   setInput("");
-  // };
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
-    const input = e.target.value;
-    setInput(input);
-
-    clearTimeout(timeoutId);
-    setTimeoutId(
-      setTimeout(() => {
-        if (input === "") {
-          setSearchValue("Jackass");
-        } else {
-          setSearchValue(input);
-        }
-      }, 1000)
-    );
+    setInput(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSearchValue(input);
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    setTimeoutId(
+      setTimeout(() => {
+        setSearchValue(input);
+        navigate("/movies");
+      }, 1000)
+    );
   };
-
-  // const isInputEmpty = searchValue.trim() === "";
 
   return (
     <form onSubmit={handleSubmit}>
       <input
         type='search'
         placeholder='Type to search... '
-        value={searchValue}
+        value={input}
         onChange={handleChange}
       />
-
       <button type='submit'>Search</button>
     </form>
   );
