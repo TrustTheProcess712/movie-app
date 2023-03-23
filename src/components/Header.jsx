@@ -1,12 +1,10 @@
 import { Link } from "react-router-dom";
-// import SearchBar from "./SearchBar.jsx";
-const Header = ({ title }) => {
+const Header = ({ title, handleHeaderClick }) => {
   return (
     <div className='header'>
-      <Link to='/'>
+      <Link to='/' onClick={handleHeaderClick}>
         <h1>{title}</h1>
       </Link>
-      {/* <SearchBar>{children}</SearchBar> */}
     </div>
   );
 };
